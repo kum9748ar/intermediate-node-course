@@ -77,7 +77,26 @@ app.route('/users/:id')
   })
   // DELETE
   .delete((req, res) => {
-    // User.findByIdAndDelete()
+    User.findByIdAndDelete(req.params.id, (err, data) => {
+      if (err) {
+        res.json({
+          success: false,
+          message: err
+        })
+      }
+      else if (!data) {
+        res.json({
+          successL: false,
+          message: "Not Found"
+        })
+      }
+      else {
+        res.json({
+          success: true,
+          data: data
+        })
+      }
+    })
   })
 app.listen(port, () => {
   console.log(`server is listening on port:${port}`)
